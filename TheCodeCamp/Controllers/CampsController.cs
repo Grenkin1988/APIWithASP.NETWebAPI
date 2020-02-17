@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
 using System.Web.Http;
 using TheCodeCamp.Data;
@@ -17,23 +17,34 @@ namespace TheCodeCamp.Controllers {
         }
 
         [Route()]
-        public async Task<IHttpActionResult> Get() {
+        public async Task<IHttpActionResult> Get(bool includeTalks = false) {
             async Task<IHttpActionResult> Function() {
-                var result = await _repository.GetAllCampsAsync();
-                var mappedResult = _mapper.Map<IEnumerable<CampModel>>(result);
+                var result = await _repository.GetAllCampsAsync(includeTalks);
+                var mappedResult = _mapper.Map<CampModel[]>(result);
                 return Ok(mappedResult);
             }
             return await ExecuteAsync(Function);
         }
 
         [Route("{moniker}")]
-        public async Task<IHttpActionResult> Get(string moniker) {
+        public async Task<IHttpActionResult> Get(string moniker, bool includeTalks = false) {
             async Task<IHttpActionResult> Function() {
-                var result = await _repository.GetCampAsync(moniker);
+                var result = await _repository.GetCampAsync(moniker, includeTalks);
                 if (result == null) {
                     return NotFound();
                 }
                 var mappedResult = _mapper.Map<CampModel>(result);
+                return Ok(mappedResult);
+            }
+            return await ExecuteAsync(Function);
+        }
+
+        [Route("searchByDate/{eventDate:datetime}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> SearchByEventDate(DateTime eventDate, bool includeTalks = false) {
+            async Task<IHttpActionResult> Function() {
+                var result = await _repository.GetAllCampsByEventDate(eventDate, includeTalks);
+                var mappedResult = _mapper.Map<CampModel[]>(result);
                 return Ok(mappedResult);
             }
             return await ExecuteAsync(Function);
