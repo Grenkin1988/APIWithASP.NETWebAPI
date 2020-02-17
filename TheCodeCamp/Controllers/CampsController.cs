@@ -9,7 +9,7 @@ using TheCodeCamp.Models;
 namespace TheCodeCamp.Controllers {
     [ApiVersion("1.0")]
     [ApiVersion("1.1")]
-    [RoutePrefix("api/camps")]
+    [RoutePrefix("api/v{version:apiVersion}/camps")]
     public class CampsController : BaseApiController {
         private readonly ICampRepository _repository;
         private readonly IMapper _mapper;
