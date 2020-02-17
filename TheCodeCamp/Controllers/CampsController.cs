@@ -23,10 +23,10 @@ namespace TheCodeCamp.Controllers {
                 var mappedResult = _mapper.Map<CampModel[]>(result);
                 return Ok(mappedResult);
             }
-            return await ExecuteAsync(Function);
+            return await SafeExecuteAsync(Function);
         }
 
-        [Route("{moniker}")]
+        [Route("{moniker}", Name = "GetCamp")]
         public async Task<IHttpActionResult> Get(string moniker, bool includeTalks = false) {
             async Task<IHttpActionResult> Function() {
                 var result = await _repository.GetCampAsync(moniker, includeTalks);
@@ -36,7 +36,7 @@ namespace TheCodeCamp.Controllers {
                 var mappedResult = _mapper.Map<CampModel>(result);
                 return Ok(mappedResult);
             }
-            return await ExecuteAsync(Function);
+            return await SafeExecuteAsync(Function);
         }
 
         [Route("searchByDate/{eventDate:datetime}")]
@@ -47,7 +47,72 @@ namespace TheCodeCamp.Controllers {
                 var mappedResult = _mapper.Map<CampModel[]>(result);
                 return Ok(mappedResult);
             }
-            return await ExecuteAsync(Function);
+            return await SafeExecuteAsync(Function);
+        }
+
+        [Route()]
+        public async Task<IHttpActionResult> Post(CampModel model) {
+            async Task<IHttpActionResult> Function() {
+                if (await _repository.GetCampAsync(model.Moniker) != null) {
+                    ModelState.AddModelError(nameof(model.Moniker), "Moniker in use");
+                }
+
+                if (ModelState.IsValid) {
+                    var camp = _mapper.Map<Camp>(model);
+                    _repository.AddCamp(camp);
+
+                    if (await _repository.SaveChangesAsync()) {
+                        var newModel = _mapper.Map<CampModel>(camp);
+                        return CreatedAtRoute(
+                            "GetCamp",
+                            new { moniker = newModel.Moniker },
+                            newModel);
+                    }
+                }
+                return BadRequest(ModelState);
+            }
+            return await SafeExecuteAsync(Function);
+        }
+
+        [Route("{moniker}")]
+        public async Task<IHttpActionResult> Put(string moniker, CampModel model) {
+            async Task<IHttpActionResult> Function() {
+                var camp = await _repository.GetCampAsync(moniker);
+                if (camp == null) {
+                    return NotFound();
+                }
+                if (ModelState.IsValid) {
+                    _mapper.Map(model, camp);
+
+                    if (await _repository.SaveChangesAsync()) {
+                        var mappedResult = _mapper.Map<CampModel>(camp);
+                        return Ok(mappedResult);
+                    } else {
+                        return InternalServerError();
+                    }
+                }
+                return BadRequest(ModelState);
+            }
+            return await SafeExecuteAsync(Function);
+        }
+
+        [Route("{moniker}")]
+        public async Task<IHttpActionResult> Delete(string moniker) {
+            async Task<IHttpActionResult> Function() {
+                var camp = await _repository.GetCampAsync(moniker);
+                if (camp == null) {
+                    return NotFound();
+                }
+
+                _repository.DeleteCamp(camp);
+
+                if (await _repository.SaveChangesAsync()) {
+                    return Ok();
+                } else {
+                    return InternalServerError();
+                }
+            }
+            return await SafeExecuteAsync(Function);
         }
     }
 }
