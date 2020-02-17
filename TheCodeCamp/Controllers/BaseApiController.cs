@@ -12,5 +12,14 @@ namespace TheCodeCamp.Controllers {
                 return InternalServerError(ex);
             }
         }
+
+        protected IHttpActionResult SafeExecute(Func<IHttpActionResult> execute) {
+            try {
+                var responce = execute();
+                return responce;
+            } catch (Exception ex) {
+                return InternalServerError(ex);
+            }
+        }
     }
 }
