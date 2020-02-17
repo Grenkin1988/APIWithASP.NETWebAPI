@@ -3,22 +3,17 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
-namespace TheCodeCamp.Areas.HelpPage.ModelDescriptions
-{
-    internal static class ModelNameHelper
-    {
+namespace TheCodeCamp.Areas.HelpPage.ModelDescriptions {
+    internal static class ModelNameHelper {
         // Modify this to provide custom model name mapping.
-        public static string GetModelName(Type type)
-        {
+        public static string GetModelName(Type type) {
             ModelNameAttribute modelNameAttribute = type.GetCustomAttribute<ModelNameAttribute>();
-            if (modelNameAttribute != null && !String.IsNullOrEmpty(modelNameAttribute.Name))
-            {
+            if (modelNameAttribute != null && !String.IsNullOrEmpty(modelNameAttribute.Name)) {
                 return modelNameAttribute.Name;
             }
 
             string modelName = type.Name;
-            if (type.IsGenericType)
-            {
+            if (type.IsGenericType) {
                 // Format the generic type name to something like: GenericOfAgurment1AndArgument2
                 Type genericType = type.GetGenericTypeDefinition();
                 Type[] genericArguments = type.GetGenericArguments();

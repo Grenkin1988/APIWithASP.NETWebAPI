@@ -1,7 +1,5 @@
-namespace TheCodeCamp.Areas.HelpPage.ModelDescriptions
-{
-    public class CollectionModelDescription : ModelDescription
-    {
+namespace TheCodeCamp.Areas.HelpPage.ModelDescriptions {
+    public class CollectionModelDescription : ModelDescription {
         public ModelDescription ElementDescription { get; set; }
     }
 }

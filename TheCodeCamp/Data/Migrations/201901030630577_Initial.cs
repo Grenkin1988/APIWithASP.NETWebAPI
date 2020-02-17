@@ -1,16 +1,11 @@
-namespace TheCodeCamp.Migrations
-{
-    using System;
+namespace TheCodeCamp.Migrations {
     using System.Data.Entity.Migrations;
-    
-    public partial class Initial : DbMigration
-    {
-        public override void Up()
-        {
+
+    public partial class Initial : DbMigration {
+        public override void Up() {
         }
-        
-        public override void Down()
-        {
+
+        public override void Down() {
         }
     }
 }

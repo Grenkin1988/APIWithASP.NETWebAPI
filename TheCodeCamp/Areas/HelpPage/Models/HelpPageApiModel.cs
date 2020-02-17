@@ -4,18 +4,15 @@ using System.Net.Http.Headers;
 using System.Web.Http.Description;
 using TheCodeCamp.Areas.HelpPage.ModelDescriptions;
 
-namespace TheCodeCamp.Areas.HelpPage.Models
-{
+namespace TheCodeCamp.Areas.HelpPage.Models {
     /// <summary>
     /// The model that represents an API displayed on the help page.
     /// </summary>
-    public class HelpPageApiModel
-    {
+    public class HelpPageApiModel {
         /// <summary>
         /// Initializes a new instance of the <see cref="HelpPageApiModel"/> class.
         /// </summary>
-        public HelpPageApiModel()
-        {
+        public HelpPageApiModel() {
             UriParameters = new Collection<ParameterDescription>();
             SampleRequests = new Dictionary<MediaTypeHeaderValue, object>();
             SampleResponses = new Dictionary<MediaTypeHeaderValue, object>();
@@ -45,10 +42,8 @@ namespace TheCodeCamp.Areas.HelpPage.Models
         /// <summary>
         /// Gets the request body parameter descriptions.
         /// </summary>
-        public IList<ParameterDescription> RequestBodyParameters
-        {
-            get
-            {
+        public IList<ParameterDescription> RequestBodyParameters {
+            get {
                 return GetParameterDescriptions(RequestModelDescription);
             }
         }
@@ -61,10 +56,8 @@ namespace TheCodeCamp.Areas.HelpPage.Models
         /// <summary>
         /// Gets the resource property descriptions.
         /// </summary>
-        public IList<ParameterDescription> ResourceProperties
-        {
-            get
-            {
+        public IList<ParameterDescription> ResourceProperties {
+            get {
                 return GetParameterDescriptions(ResourceDescription);
             }
         }
@@ -84,20 +77,16 @@ namespace TheCodeCamp.Areas.HelpPage.Models
         /// </summary>
         public Collection<string> ErrorMessages { get; private set; }
 
-        private static IList<ParameterDescription> GetParameterDescriptions(ModelDescription modelDescription)
-        {
+        private static IList<ParameterDescription> GetParameterDescriptions(ModelDescription modelDescription) {
             ComplexTypeModelDescription complexTypeModelDescription = modelDescription as ComplexTypeModelDescription;
-            if (complexTypeModelDescription != null)
-            {
+            if (complexTypeModelDescription != null) {
                 return complexTypeModelDescription.Properties;
             }
 
             CollectionModelDescription collectionModelDescription = modelDescription as CollectionModelDescription;
-            if (collectionModelDescription != null)
-            {
+            if (collectionModelDescription != null) {
                 complexTypeModelDescription = collectionModelDescription.ElementDescription as ComplexTypeModelDescription;
-                if (complexTypeModelDescription != null)
-                {
+                if (complexTypeModelDescription != null) {
                     return complexTypeModelDescription.Properties;
                 }
             }

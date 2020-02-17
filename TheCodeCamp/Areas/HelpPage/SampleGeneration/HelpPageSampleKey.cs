@@ -3,21 +3,17 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Net.Http.Headers;
 
-namespace TheCodeCamp.Areas.HelpPage
-{
+namespace TheCodeCamp.Areas.HelpPage {
     /// <summary>
     /// This is used to identify the place where the sample should be applied.
     /// </summary>
-    public class HelpPageSampleKey
-    {
+    public class HelpPageSampleKey {
         /// <summary>
         /// Creates a new <see cref="HelpPageSampleKey"/> based on media type.
         /// </summary>
         /// <param name="mediaType">The media type.</param>
-        public HelpPageSampleKey(MediaTypeHeaderValue mediaType)
-        {
-            if (mediaType == null)
-            {
+        public HelpPageSampleKey(MediaTypeHeaderValue mediaType) {
+            if (mediaType == null) {
                 throw new ArgumentNullException("mediaType");
             }
 
@@ -33,10 +29,8 @@ namespace TheCodeCamp.Areas.HelpPage
         /// <param name="mediaType">The media type.</param>
         /// <param name="type">The CLR type.</param>
         public HelpPageSampleKey(MediaTypeHeaderValue mediaType, Type type)
-            : this(mediaType)
-        {
-            if (type == null)
-            {
+            : this(mediaType) {
+            if (type == null) {
                 throw new ArgumentNullException("type");
             }
 
@@ -50,22 +44,17 @@ namespace TheCodeCamp.Areas.HelpPage
         /// <param name="controllerName">Name of the controller.</param>
         /// <param name="actionName">Name of the action.</param>
         /// <param name="parameterNames">The parameter names.</param>
-        public HelpPageSampleKey(SampleDirection sampleDirection, string controllerName, string actionName, IEnumerable<string> parameterNames)
-        {
-            if (!Enum.IsDefined(typeof(SampleDirection), sampleDirection))
-            {
+        public HelpPageSampleKey(SampleDirection sampleDirection, string controllerName, string actionName, IEnumerable<string> parameterNames) {
+            if (!Enum.IsDefined(typeof(SampleDirection), sampleDirection)) {
                 throw new InvalidEnumArgumentException("sampleDirection", (int)sampleDirection, typeof(SampleDirection));
             }
-            if (controllerName == null)
-            {
+            if (controllerName == null) {
                 throw new ArgumentNullException("controllerName");
             }
-            if (actionName == null)
-            {
+            if (actionName == null) {
                 throw new ArgumentNullException("actionName");
             }
-            if (parameterNames == null)
-            {
+            if (parameterNames == null) {
                 throw new ArgumentNullException("parameterNames");
             }
 
@@ -84,10 +73,8 @@ namespace TheCodeCamp.Areas.HelpPage
         /// <param name="actionName">Name of the action.</param>
         /// <param name="parameterNames">The parameter names.</param>
         public HelpPageSampleKey(MediaTypeHeaderValue mediaType, SampleDirection sampleDirection, string controllerName, string actionName, IEnumerable<string> parameterNames)
-            : this(sampleDirection, controllerName, actionName, parameterNames)
-        {
-            if (mediaType == null)
-            {
+            : this(sampleDirection, controllerName, actionName, parameterNames) {
+            if (mediaType == null) {
                 throw new ArgumentNullException("mediaType");
             }
 
@@ -130,11 +117,9 @@ namespace TheCodeCamp.Areas.HelpPage
         /// </summary>
         public SampleDirection? SampleDirection { get; private set; }
 
-        public override bool Equals(object obj)
-        {
+        public override bool Equals(object obj) {
             HelpPageSampleKey otherKey = obj as HelpPageSampleKey;
-            if (otherKey == null)
-            {
+            if (otherKey == null) {
                 return false;
             }
 
@@ -146,23 +131,18 @@ namespace TheCodeCamp.Areas.HelpPage
                 ParameterNames.SetEquals(otherKey.ParameterNames);
         }
 
-        public override int GetHashCode()
-        {
+        public override int GetHashCode() {
             int hashCode = ControllerName.ToUpperInvariant().GetHashCode() ^ ActionName.ToUpperInvariant().GetHashCode();
-            if (MediaType != null)
-            {
+            if (MediaType != null) {
                 hashCode ^= MediaType.GetHashCode();
             }
-            if (SampleDirection != null)
-            {
+            if (SampleDirection != null) {
                 hashCode ^= SampleDirection.GetHashCode();
             }
-            if (ParameterType != null)
-            {
+            if (ParameterType != null) {
                 hashCode ^= ParameterType.GetHashCode();
             }
-            foreach (string parameterName in ParameterNames)
-            {
+            foreach (string parameterName in ParameterNames) {
                 hashCode ^= parameterName.ToUpperInvariant().GetHashCode();
             }
 

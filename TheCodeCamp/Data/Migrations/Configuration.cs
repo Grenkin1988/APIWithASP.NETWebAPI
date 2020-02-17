@@ -1,42 +1,34 @@
-namespace TheCodeCamp.Migrations
-{
-  using System;
-  using System.Data.Entity;
-  using System.Data.Entity.Migrations;
-  using System.Linq;
-  using TheCodeCamp.Data;
+namespace TheCodeCamp.Migrations {
+    using System;
+    using System.Data.Entity.Migrations;
+    using System.Linq;
+    using TheCodeCamp.Data;
 
-  internal sealed class Configuration : DbMigrationsConfiguration<TheCodeCamp.Data.CampContext>
-  {
-    public Configuration()
-    {
-      AutomaticMigrationsEnabled = true;
-      ContextKey = "TheCodeCamp.Data.CampContext";
-    }
+    internal sealed class Configuration : DbMigrationsConfiguration<TheCodeCamp.Data.CampContext> {
+        public Configuration() {
+            AutomaticMigrationsEnabled = true;
+            ContextKey = "TheCodeCamp.Data.CampContext";
+        }
 
-    protected override void Seed(CampContext ctx)
-    {
-      if (!ctx.Camps.Any())
-      {
-        ctx.Camps.AddOrUpdate(x => x.CampId,
-          new Camp()
-          {
-            CampId = 1,
-            Moniker = "ATL2018",
-            Name = "Atlanta Code Camp",
-            EventDate = new DateTime(2018, 10, 18),
-            Location = new Location()
-            {
-              VenueName = "Atlanta Convention Center",
-              Address1 = "123 Main Street",
-              CityTown = "Atlanta",
-              StateProvince = "GA",
-              PostalCode = "12345",
-              Country = "USA"
-            },
-            Length = 1,
-            Talks = new Talk[]
-            {
+        protected override void Seed(CampContext ctx) {
+            if (!ctx.Camps.Any()) {
+                ctx.Camps.AddOrUpdate(x => x.CampId,
+                  new Camp() {
+                      CampId = 1,
+                      Moniker = "ATL2018",
+                      Name = "Atlanta Code Camp",
+                      EventDate = new DateTime(2018, 10, 18),
+                      Location = new Location() {
+                          VenueName = "Atlanta Convention Center",
+                          Address1 = "123 Main Street",
+                          CityTown = "Atlanta",
+                          StateProvince = "GA",
+                          PostalCode = "12345",
+                          Country = "USA"
+                      },
+                      Length = 1,
+                      Talks = new Talk[]
+                    {
             new Talk
             {
               TalkId = 1,
@@ -73,9 +65,9 @@ namespace TheCodeCamp.Migrations
                 Twitter = "resawildermuth"
               }
             }
+                    }
+                  });
             }
-          });
-      }
+        }
     }
-  }
 }

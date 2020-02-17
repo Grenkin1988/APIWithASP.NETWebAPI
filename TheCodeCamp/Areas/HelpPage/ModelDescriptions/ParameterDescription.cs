@@ -1,12 +1,8 @@
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace TheCodeCamp.Areas.HelpPage.ModelDescriptions
-{
-    public class ParameterDescription
-    {
-        public ParameterDescription()
-        {
+namespace TheCodeCamp.Areas.HelpPage.ModelDescriptions {
+    public class ParameterDescription {
+        public ParameterDescription() {
             Annotations = new Collection<ParameterAnnotation>();
         }
 
