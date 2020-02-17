@@ -11,29 +11,17 @@ namespace TheCodeCamp.Data {
             _context = context;
         }
 
-        public void AddCamp(Camp camp) {
-            _context.Camps.Add(camp);
-        }
+        public void AddCamp(Camp camp) => _context.Camps.Add(camp);
 
-        public void AddTalk(Talk talk) {
-            _context.Talks.Add(talk);
-        }
+        public void AddTalk(Talk talk) => _context.Talks.Add(talk);
 
-        public void AddSpeaker(Speaker speaker) {
-            _context.Speakers.Add(speaker);
-        }
+        public void AddSpeaker(Speaker speaker) => _context.Speakers.Add(speaker);
 
-        public void DeleteCamp(Camp camp) {
-            _context.Camps.Remove(camp);
-        }
+        public void DeleteCamp(Camp camp) => _context.Camps.Remove(camp);
 
-        public void DeleteTalk(Talk talk) {
-            _context.Talks.Remove(talk);
-        }
+        public void DeleteTalk(Talk talk) => _context.Talks.Remove(talk);
 
-        public void DeleteSpeaker(Speaker speaker) {
-            _context.Speakers.Remove(speaker);
-        }
+        public void DeleteSpeaker(Speaker speaker) => _context.Speakers.Remove(speaker);
 
         public async Task<bool> SaveChangesAsync() {
             // Only return success if at least one row was changed
@@ -41,7 +29,7 @@ namespace TheCodeCamp.Data {
         }
 
         public async Task<Camp[]> GetAllCampsByEventDate(DateTime dateTime, bool includeTalks = false) {
-            IQueryable<Camp> query = _context.Camps
+            var query = _context.Camps
                 .Include(c => c.Location);
 
             if (includeTalks) {
@@ -57,7 +45,7 @@ namespace TheCodeCamp.Data {
         }
 
         public async Task<Camp[]> GetAllCampsAsync(bool includeTalks = false) {
-            IQueryable<Camp> query = _context.Camps
+            var query = _context.Camps
                 .Include(c => c.Location);
 
             if (includeTalks) {
@@ -72,7 +60,7 @@ namespace TheCodeCamp.Data {
         }
 
         public async Task<Camp> GetCampAsync(string moniker, bool includeTalks = false) {
-            IQueryable<Camp> query = _context.Camps
+            var query = _context.Camps
                 .Include(c => c.Location);
 
             if (includeTalks) {
@@ -117,7 +105,7 @@ namespace TheCodeCamp.Data {
         }
 
         public async Task<Speaker[]> GetSpeakersByMonikerAsync(string moniker) {
-            IQueryable<Speaker> query = _context.Talks
+            var query = _context.Talks
               .Where(t => t.Camp.Moniker == moniker)
               .Select(t => t.Speaker)
               .Where(s => s != null)

@@ -9,12 +9,12 @@ namespace TheCodeCamp {
     public class AutofacConfig {
         public static void Register() {
             var bldr = new ContainerBuilder();
-            HttpConfiguration config = GlobalConfiguration.Configuration;
+            var config = GlobalConfiguration.Configuration;
             bldr.RegisterApiControllers(Assembly.GetExecutingAssembly());
             RegisterServices(bldr);
             bldr.RegisterWebApiFilterProvider(config);
             bldr.RegisterWebApiModelBinderProvider();
-            IContainer container = bldr.Build();
+            var container = bldr.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
         }
 

@@ -15,16 +15,12 @@ namespace TheCodeCamp.Areas.HelpPage {
         public string ErrorMessage { get; private set; }
 
         public override bool Equals(object obj) {
-            InvalidSample other = obj as InvalidSample;
+            var other = obj as InvalidSample;
             return other != null && ErrorMessage == other.ErrorMessage;
         }
 
-        public override int GetHashCode() {
-            return ErrorMessage.GetHashCode();
-        }
+        public override int GetHashCode() => ErrorMessage.GetHashCode();
 
-        public override string ToString() {
-            return ErrorMessage;
-        }
+        public override string ToString() => ErrorMessage;
     }
 }

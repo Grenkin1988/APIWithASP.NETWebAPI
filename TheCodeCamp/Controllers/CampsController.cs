@@ -30,7 +30,7 @@ namespace TheCodeCamp.Controllers {
         public async Task<IHttpActionResult> Get(string moniker) {
             async Task<IHttpActionResult> Function() {
                 var result = await _repository.GetCampAsync(moniker);
-                if(result == null) {
+                if (result == null) {
                     return NotFound();
                 }
                 var mappedResult = _mapper.Map<CampModel>(result);

@@ -1,8 +1,5 @@
-using System;
 using System.Web.Http;
 using System.Web.Mvc;
-using TheCodeCamp.Areas.HelpPage.ModelDescriptions;
-using TheCodeCamp.Areas.HelpPage.Models;
 
 namespace TheCodeCamp.Areas.HelpPage.Controllers {
     /// <summary>
@@ -27,8 +24,8 @@ namespace TheCodeCamp.Areas.HelpPage.Controllers {
         }
 
         public ActionResult Api(string apiId) {
-            if (!String.IsNullOrEmpty(apiId)) {
-                HelpPageApiModel apiModel = Configuration.GetHelpPageApiModel(apiId);
+            if (!string.IsNullOrEmpty(apiId)) {
+                var apiModel = Configuration.GetHelpPageApiModel(apiId);
                 if (apiModel != null) {
                     return View(apiModel);
                 }
@@ -38,10 +35,9 @@ namespace TheCodeCamp.Areas.HelpPage.Controllers {
         }
 
         public ActionResult ResourceModel(string modelName) {
-            if (!String.IsNullOrEmpty(modelName)) {
-                ModelDescriptionGenerator modelDescriptionGenerator = Configuration.GetModelDescriptionGenerator();
-                ModelDescription modelDescription;
-                if (modelDescriptionGenerator.GeneratedModels.TryGetValue(modelName, out modelDescription)) {
+            if (!string.IsNullOrEmpty(modelName)) {
+                var modelDescriptionGenerator = Configuration.GetModelDescriptionGenerator();
+                if (modelDescriptionGenerator.GeneratedModels.TryGetValue(modelName, out var modelDescription)) {
                     return View(modelDescription);
                 }
             }

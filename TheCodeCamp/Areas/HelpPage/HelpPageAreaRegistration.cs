@@ -3,11 +3,7 @@ using System.Web.Mvc;
 
 namespace TheCodeCamp.Areas.HelpPage {
     public class HelpPageAreaRegistration : AreaRegistration {
-        public override string AreaName {
-            get {
-                return "HelpPage";
-            }
-        }
+        public override string AreaName => "HelpPage";
 
         public override void RegisterArea(AreaRegistrationContext context) {
             context.MapRoute(

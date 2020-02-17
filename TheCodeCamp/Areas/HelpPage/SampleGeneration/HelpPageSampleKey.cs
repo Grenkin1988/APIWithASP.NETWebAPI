@@ -17,8 +17,8 @@ namespace TheCodeCamp.Areas.HelpPage {
                 throw new ArgumentNullException("mediaType");
             }
 
-            ActionName = String.Empty;
-            ControllerName = String.Empty;
+            ActionName = string.Empty;
+            ControllerName = string.Empty;
             MediaType = mediaType;
             ParameterNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         }
@@ -118,13 +118,13 @@ namespace TheCodeCamp.Areas.HelpPage {
         public SampleDirection? SampleDirection { get; private set; }
 
         public override bool Equals(object obj) {
-            HelpPageSampleKey otherKey = obj as HelpPageSampleKey;
+            var otherKey = obj as HelpPageSampleKey;
             if (otherKey == null) {
                 return false;
             }
 
-            return String.Equals(ControllerName, otherKey.ControllerName, StringComparison.OrdinalIgnoreCase) &&
-                String.Equals(ActionName, otherKey.ActionName, StringComparison.OrdinalIgnoreCase) &&
+            return string.Equals(ControllerName, otherKey.ControllerName, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(ActionName, otherKey.ActionName, StringComparison.OrdinalIgnoreCase) &&
                 (MediaType == otherKey.MediaType || (MediaType != null && MediaType.Equals(otherKey.MediaType))) &&
                 ParameterType == otherKey.ParameterType &&
                 SampleDirection == otherKey.SampleDirection &&
